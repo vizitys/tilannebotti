@@ -1,0 +1,27 @@
+{
+  "name": "tilannebotti",
+  "version": "1.0.0",
+  "description": "A Discord bot for tilannehuone.fi",
+  "main": "src",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon -I --experimental-specifier-resolution=node --exec node --loader ts-node/esm ./src/index.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "ts-node ./src/index.ts"
+  },
+  "author": "vizitys",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/nodemon": "^1.19.2",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.0"
+  }
+}
