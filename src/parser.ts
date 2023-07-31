@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 
-export async function fetchTilannehuone() {
+export async function fetchTilannehuone(number: number = 0) {
   // TODO: location filter
 
   const url = "https://www.tilannehuone.fi/halytys.php";
@@ -23,7 +23,7 @@ export async function fetchTilannehuone() {
       const date = $el.find(".pvmdate").text().trim();
 
       // time is a text node with no tag so we have to filter it out
-      const time = $el
+      let time = $el
         .find(".pvm")
         .contents()
         .filter(function () {
@@ -32,8 +32,16 @@ export async function fetchTilannehuone() {
         .text()
         .trim();
 
+      if (time.length !== 8) {
+        time = `0${time}`;
+      }
+
       const type = $el.find("td:nth-child(4)").text();
-      // TODO possible description
+
+      let description = "";
+      if ($el.hasClass("artlnkcss")) {
+        description = $el.next().find(".infotxt").text();
+      }
 
       return {
         image,
@@ -41,9 +49,10 @@ export async function fetchTilannehuone() {
         date,
         time,
         type,
+        description,
       };
     })
     .get();
 
-  return alerts[0];
+  return alerts[number];
 }
